@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { insights } from "@/data/insights";
 import { motion } from "framer-motion";
+import { LiquidBackground } from "@/components/ui/LiquidBackground";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -28,7 +29,8 @@ const Insights = () => {
       className="pb-24"
     >
       {/* Hero */}
-      <section className="section-padding bg-section-primary">
+      <section className="section-padding bg-section-primary relative overflow-hidden">
+        <LiquidBackground variant="insights" />
         <div className="container-editorial">
           <div className="max-w-4xl">
             <motion.span variants={itemVariants} className="caption text-muted-foreground uppercase tracking-widest">

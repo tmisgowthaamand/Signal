@@ -1,5 +1,6 @@
 import { useParams, Link, Navigate } from "react-router-dom";
 import { getCaseStudy, getRelatedCaseStudies } from "@/data/caseStudies";
+import { LiquidBackground } from "@/components/ui/LiquidBackground";
 
 const insightTitles: Record<string, string> = {
   "clarity-compounds": "Clarity Compounds",
@@ -28,7 +29,8 @@ const CaseStudy = () => {
   return (
     <>
       {/* Header */}
-      <section className="section-padding bg-section-primary">
+      <section className="section-padding bg-section-primary relative overflow-hidden">
+        <LiquidBackground variant="work" />
         <div className="container-editorial">
           <div className="max-w-3xl">
             <Link

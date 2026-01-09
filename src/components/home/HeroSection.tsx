@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import { Hero3D } from "./Hero3D";
+import { LiquidBackground } from "../ui/LiquidBackground";
 import { motion } from "framer-motion";
 
 export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center bg-section-primary overflow-hidden">
-      <Hero3D />
+      <LiquidBackground variant="home" />
 
       <div className="container-editorial relative z-20 pt-20">
         <div className="max-w-5xl">
@@ -51,7 +51,7 @@ export function HeroSection() {
               to="/proposal"
               className="luxury-button luxury-button-fill group"
             >
-              <span className="relative z-10 body-small tracking-widest font-bold">Get a Proposal</span>
+              <span className="relative z-10 body-small tracking-widest font-bold">Get Started</span>
               <motion.span
                 className="ml-3 inline-block"
                 animate={{ x: [0, 6, 0] }}

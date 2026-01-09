@@ -12,13 +12,21 @@ class LocalErrorBoundary extends Component<{ children: ReactNode, fallback: Reac
     render() { return this.state.hasError ? this.props.fallback : this.props.children; }
 }
 
-export const Hero3D = () => {
+interface Hero3DProps {
+    scene?: string;
+    className?: string;
+}
+
+export const Hero3D = ({
+    scene = "https://prod.spline.design/kZqon7WDbT84-Kj3/scene.splinecode",
+    className
+}: Hero3DProps) => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [hasError, setHasError] = useState(false);
 
     // Ultra-premium mesh gradient fallback
     const MeshFallback = () => (
-        <div className="absolute inset-0 overflow-hidden bg-[#000000]">
+        <div className="absolute inset-0 overflow-hidden bg-background">
             <motion.div
                 animate={{
                     scale: [1, 1.2, 1],
@@ -27,7 +35,7 @@ export const Hero3D = () => {
                     y: [0, 50, 0]
                 }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="absolute top-[-20%] left-[-10%] w-[80%] h-[80%] rounded-full bg-accent/20 blur-[120px] opacity-40"
+                className="absolute top-[-20%] left-[-10%] w-[80%] h-[80%] rounded-full bg-primary/10 blur-[120px] opacity-40"
             />
             <motion.div
                 animate={{
@@ -37,14 +45,14 @@ export const Hero3D = () => {
                     y: [0, -100, 0]
                 }}
                 transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] rounded-full bg-foreground/10 blur-[100px] opacity-30"
+                className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] rounded-full bg-primary/5 blur-[100px] opacity-30"
             />
-            <div className="absolute inset-0 bg-background/40 backdrop-blur-[20px]" />
+            <div className="absolute inset-0 bg-background/60 backdrop-blur-[40px]" />
         </div>
     );
 
     return (
-        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none md:pointer-events-auto">
+        <div className={className ? className : "absolute inset-0 z-0 overflow-hidden pointer-events-none md:pointer-events-auto"}>
             <AnimatePresence>
                 {(!isLoaded || hasError) && (
                     <motion.div
@@ -65,12 +73,11 @@ export const Hero3D = () => {
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: isLoaded ? 1 : 0 }}
-                            transition={{ duration: 1.5 }}
+                            transition={{ duration: 2, ease: [0.23, 1, 0.32, 1] }}
                             className="w-full h-full"
                         >
                             <Spline
-                                // Using a more stable and public Spline scene
-                                scene="https://prod.spline.design/kZqon7WDbT84-Kj3/scene.splinecode"
+                                scene={scene}
                                 onLoad={() => setIsLoaded(true)}
                                 onError={(e) => {
                                     console.error("Spline Load Error:", e);

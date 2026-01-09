@@ -1,5 +1,6 @@
 import React, { useState, useRef, Component, ErrorInfo, ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { LiquidBackground } from "@/components/ui/LiquidBackground";
 
 // Error boundary component for the form
 class FormErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
@@ -166,7 +167,8 @@ const Proposal = () => {
       className="pb-24"
     >
       {/* Hero */}
-      <section className="section-padding bg-section-primary">
+      <section className="section-padding bg-section-primary relative overflow-hidden">
+        <LiquidBackground variant="inquiry" />
         <div className="container-editorial">
           <div className="max-w-4xl">
             <motion.span variants={itemVariants} className="caption text-muted-foreground uppercase tracking-widest">
