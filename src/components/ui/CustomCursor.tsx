@@ -11,15 +11,15 @@ export const CustomCursor = () => {
     const mouseX = useMotionValue(-100);
     const mouseY = useMotionValue(-100);
 
-    // Smooth springs for the outer ring
-    const ringSpringConfig = { damping: 30, stiffness: 200, mass: 0.6 };
-    const dotSpringConfig = { damping: 40, stiffness: 400, mass: 0.2 };
+    // Higher stiffness and lower mass for faster, more sensitive response
+    const ringSpringConfig = { damping: 20, stiffness: 350, mass: 0.4 };
 
     const ringX = useSpring(mouseX, ringSpringConfig);
     const ringY = useSpring(mouseY, ringSpringConfig);
 
-    const dotX = useSpring(mouseX, dotSpringConfig);
-    const dotY = useSpring(mouseY, dotSpringConfig);
+    // Direct link to mouse position for 1:1 sensitivity (no lag)
+    const dotX = mouseX;
+    const dotY = mouseY;
 
     const handleMouseMove = useCallback((e: MouseEvent) => {
         mouseX.set(e.clientX);
@@ -125,7 +125,7 @@ export const CustomCursor = () => {
                 {/* Inner dot */}
                 <motion.div
                     className={cn(
-                        "fixed w-1.5 h-1.5 bg-primary rounded-full transition-transform duration-200",
+                        "fixed w-1.5 h-1.5 bg-primary rounded-full transition-opacity duration-200",
                         isInput && "opacity-0"
                     )}
                     style={{
