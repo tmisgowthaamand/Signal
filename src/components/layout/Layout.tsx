@@ -5,6 +5,7 @@ import { Footer } from "./Footer";
 import { BottomMenu } from "../ui/BottomMenu";
 import { ScrollProgress } from "../ui/ScrollProgress";
 import { ScrollToTopButton } from "../ui/ScrollToTopButton";
+import { CustomCursor } from "../ui/CustomCursor";
 
 interface LayoutProps {
   children: ReactNode;
@@ -27,6 +28,7 @@ export function Layout({
 }: LayoutProps) {
   return (
     <>
+      <CustomCursor />
       <ScrollProgress />
       <Helmet>
         <title>{title}</title>
