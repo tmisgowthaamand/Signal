@@ -25,10 +25,11 @@ export const SilkWave = ({
         let time = 0;
 
         const resize = () => {
-            const dpr = window.devicePixelRatio || 1;
+            // Optimization: Use lower resolution for blurred background
+            const dpr = (window.devicePixelRatio || 1) * 0.5;
             canvas.width = canvas.clientWidth * dpr;
             canvas.height = canvas.clientHeight * dpr;
-            ctx.scale(dpr, dpr);
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         };
 
         window.addEventListener("resize", resize);
@@ -81,10 +82,8 @@ export const SilkWave = ({
                 gradient.addColorStop(1, `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0)`);
 
                 ctx.fillStyle = gradient;
-                ctx.shadowBlur = 60;
-                ctx.shadowColor = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${alpha * 0.3})`;
+                // Removed expensive shadowBlur as it's already blurred by CSS filter
                 ctx.fill();
-                ctx.shadowBlur = 0;
             }
 
             animationFrameId = requestAnimationFrame(draw);

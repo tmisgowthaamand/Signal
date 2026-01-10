@@ -42,11 +42,14 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks: {
-            react: ['react', 'react-dom'],
-            vendor: ['react-router-dom'],
+            'react-vendor': ['react', 'react-dom'],
+            'router-vendor': ['react-router-dom'],
+            'animation-vendor': ['framer-motion'],
+            'ui-vendor': ['lucide-react', '@radix-ui/react-slot', 'class-variance-authority', 'tailwind-merge'],
           },
         },
       },
+      chunkSizeWarningLimit: 1000,
     },
     plugins: [
       react(),

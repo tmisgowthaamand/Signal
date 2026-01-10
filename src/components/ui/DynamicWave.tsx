@@ -35,7 +35,8 @@ export const DynamicWave = ({
         let time = 0;
 
         const resize = () => {
-            const dpr = window.devicePixelRatio || 1;
+            // Optimization: Use lower resolution for blurred background to improve performance
+            const dpr = (window.devicePixelRatio || 1) * 0.5; // Reduce resolution by half
             canvas.width = canvas.clientWidth * dpr;
             canvas.height = canvas.clientHeight * dpr;
             ctx.scale(dpr, dpr);

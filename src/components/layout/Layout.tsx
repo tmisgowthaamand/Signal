@@ -6,6 +6,7 @@ import { BottomMenu } from "../ui/BottomMenu";
 import { ScrollProgress } from "../ui/ScrollProgress";
 import { ScrollToTopButton } from "../ui/ScrollToTopButton";
 import { CustomCursor } from "../ui/CustomCursor";
+import { WaveBackground } from "../ui/WaveBackground";
 
 interface LayoutProps {
   children: ReactNode;
@@ -63,7 +64,15 @@ export function Layout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </Helmet>
 
-      <div className="min-h-screen flex flex-col bg-background text-foreground transition-colors duration-300">
+      <div className="min-h-screen flex flex-col bg-background text-foreground transition-colors duration-300 relative overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          <WaveBackground
+            className="opacity-70"
+            colors={["#0ea5e9", "#a855f7", "#f59e0b", "#22c55e"]}
+            speed={0.35}
+          />
+          <div className="absolute inset-0 bg-background/70" />
+        </div>
         <Navigation />
         <main id="main-content" className="flex-1 pt-20 md:pt-24" tabIndex={-1}>
           {children}

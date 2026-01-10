@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -15,7 +15,7 @@ interface PremiumGalleryProps {
     projects: Project[];
 }
 
-export const PremiumGallery = ({ projects }: PremiumGalleryProps) => {
+const PremiumGalleryBase = ({ projects }: PremiumGalleryProps) => {
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
     return (
@@ -57,8 +57,8 @@ export const PremiumGallery = ({ projects }: PremiumGalleryProps) => {
                                 initial={{ opacity: 0, scale: 0.8, rotate: -2 }}
                                 animate={{ opacity: 1, scale: 1, rotate: 0 }}
                                 exit={{ opacity: 0, scale: 0.8, rotate: 2 }}
-                                transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-                                className="absolute right-[15%] top-1/2 -translate-y-1/2 pointer-events-none z-20 hidden xl:block"
+                                transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] as const }}
+                                className="absolute right-[15%] top-1/2 -translate-y-1/2 pointer-events-none z-20 hidden xl:block will-change-transform"
                                 style={{ width: '600px', height: '400px' }}
                             >
                                 <div className="w-full h-full bg-muted overflow-hidden relative shadow-[0_40px_100px_rgba(0,0,0,0.4)]">
@@ -69,7 +69,9 @@ export const PremiumGallery = ({ projects }: PremiumGalleryProps) => {
                                             src={project.image}
                                             alt={project.client}
                                             className="w-full h-full object-cover"
-                                            transition={{ duration: 1.5, ease: [0.19, 1, 0.22, 1] }}
+                                            loading="lazy"
+                                            decoding="async"
+                                            transition={{ duration: 1, ease: [0.19, 1, 0.22, 1] as const }}
                                         />
                                     ) : (
                                         <div className="w-full h-full bg-gradient-to-br from-neutral-800 to-neutral-900 flex items-center justify-center">
@@ -93,3 +95,5 @@ export const PremiumGallery = ({ projects }: PremiumGalleryProps) => {
         </div>
     );
 };
+
+export const PremiumGallery = memo(PremiumGalleryBase);

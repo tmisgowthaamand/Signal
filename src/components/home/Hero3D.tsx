@@ -1,5 +1,5 @@
 import React, { Suspense, useState, Component, ErrorInfo, ReactNode } from 'react';
-import Spline from '@splinetool/react-spline';
+const Spline = React.lazy(() => import('@splinetool/react-spline'));
 import { motion, AnimatePresence } from 'framer-motion';
 
 class LocalErrorBoundary extends Component<{ children: ReactNode, fallback: ReactNode, onError?: () => void }, { hasError: boolean }> {
@@ -73,7 +73,7 @@ export const Hero3D = ({
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: isLoaded ? 1 : 0 }}
-                            transition={{ duration: 2, ease: [0.23, 1, 0.32, 1] }}
+                            transition={{ duration: 2, ease: [0.23, 1, 0.32, 1] as const }}
                             className="w-full h-full"
                         >
                             <Spline

@@ -2,6 +2,10 @@ import React, { Suspense, useState, Component, ErrorInfo, ReactNode } from "reac
 import Spline from "@splinetool/react-spline";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
+import { WaveAnimation } from "./WaveAnimation";
+import { FloatingCharacters } from "./FloatingCharacters";
+import { ParticleSystem } from "./ParticleSystem";
+import { MorphingBlob } from "./MorphingBlob";
 
 interface LiquidBackgroundProps {
     className?: string;
@@ -87,41 +91,37 @@ export const LiquidBackground = ({
 
     const styles = getVariantStyles();
 
-    // Premium Mesh Gradient Fallback (Matches Hero3D style but specialized)
+    // Optimized Mesh Background with better performance
     const MeshFallback = () => (
         <div className="absolute inset-0 overflow-hidden bg-background">
+            {/* Optimized Base gradient blobs */}
             <motion.div
                 animate={{
-                    ...styles.animation1,
-                    x: [0, 100, 0],
-                    y: [0, 50, 0]
+                    x: [0, 50, 0],
+                    y: [0, 25, 0]
                 }}
-                transition={{ duration: styles.animation1.duration, repeat: Infinity, ease: "linear" }}
-                className={cn("absolute top-[-20%] left-[-10%] w-[80%] h-[80%] rounded-full blur-[120px] opacity-40 mix-blend-screen", styles.blob1)}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                className={cn("absolute top-[-15%] left-[-5%] w-[70%] h-[70%] rounded-full blur-[80px] opacity-30 mix-blend-screen will-change-transform", styles.blob1)}
             />
             <motion.div
                 animate={{
-                    ...styles.animation2,
-                    x: [0, -50, 0],
-                    y: [0, -100, 0]
+                    x: [0, -25, 0],
+                    y: [0, -50, 0]
                 }}
-                transition={{ duration: styles.animation2.duration, repeat: Infinity, ease: "linear" }}
-                className={cn("absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] rounded-full blur-[100px] opacity-30 mix-blend-screen", styles.blob2)}
+                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                className={cn("absolute bottom-[-5%] right-[-5%] w-[50%] h-[50%] rounded-full blur-[70px] opacity-20 mix-blend-screen will-change-transform", styles.blob2)}
             />
-            <motion.div
-                animate={{
-                    scale: [1, 1.5, 1],
-                    opacity: [0.1, 0.2, 0.1],
-                }}
-                transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-                className={cn("absolute top-[40%] left-[30%] w-[40%] h-[40%] rounded-full blur-[90px] opacity-10 mix-blend-overlay", styles.blob3)}
-            />
-            <div className="absolute inset-0 bg-background/60 backdrop-blur-[40px]" />
 
-            {/* Noise overlay for texture */}
-            <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay pointer-events-none"
-                style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }}
-            />
+            {/* Subtler layers for better performance */}
+            <WaveAnimation variant={variant} className="opacity-40" />
+            <ParticleSystem variant={variant} particleCount={12} className="opacity-30" />
+            <MorphingBlob variant={variant} className="opacity-30" />
+
+            {/* Optimized backdrop blur - reduced intensity for mobile smoothness */}
+            <div className="absolute inset-0 bg-background/40 backdrop-blur-[20px] pointer-events-none" />
+
+            {/* Static texture instead of SVG filter for zero-CPU cost texture */}
+            <div className="absolute inset-0 opacity-[0.015] pointer-events-none bg-noise" />
         </div>
     );
 
@@ -171,4 +171,3 @@ export const LiquidBackground = ({
         </div>
     );
 };
-
