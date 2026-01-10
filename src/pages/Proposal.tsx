@@ -2,7 +2,7 @@ import { useState, useRef, Component } from "react";
 import type { ErrorInfo, ReactNode } from "react";
 import { motion, AnimatePresence, useScroll, useTransform, Variants } from "framer-motion";
 import { RunningText } from "@/components/ui/RunningText";
-import { LiquidBackground } from "@/components/ui/LiquidBackground";
+import { Proposal3DBackground } from "@/components/home/Proposal3DBackground";
 import { MorphingInput } from "@/components/ui/MorphingInput";
 
 // Error boundary component for the form
@@ -65,7 +65,7 @@ const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1 }
+    transition: { staggerChildren: 0.02, delayChildren: 0 }
   }
 };
 
@@ -160,7 +160,7 @@ const Proposal = () => {
   if (isSubmitted) {
     return (
       <section className="section-padding bg-section-primary min-h-[80vh] flex items-center relative overflow-hidden">
-        <LiquidBackground variant="inquiry" />
+        <Proposal3DBackground />
 
         <div className="container-editorial relative z-10">
           <motion.div
@@ -237,17 +237,7 @@ const Proposal = () => {
     >
       {/* Hero - Rose/Pink Theme */}
       <section ref={heroRef} className="section-padding bg-section-primary relative overflow-hidden min-h-[70vh] flex items-center">
-        <LiquidBackground variant="inquiry" />
-
-        {/* Decorative Elements */}
-        <motion.div
-          style={{ y, opacity }}
-          className="absolute top-[20%] right-[10%] w-32 h-32 rounded-full border border-rose-500/15 hidden lg:block"
-        />
-        <motion.div
-          style={{ y: useTransform(scrollYProgress, [0, 1], [0, 50]), opacity }}
-          className="absolute bottom-[25%] right-[15%] w-24 h-24 rounded-full bg-gradient-to-br from-rose-500/15 to-pink-500/10 blur-2xl hidden lg:block"
-        />
+        <Proposal3DBackground />
 
         {/* Status Badge */}
         <motion.div
@@ -288,7 +278,7 @@ const Proposal = () => {
                   <motion.span
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
-                    transition={{ delay: 0.6, duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
+                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
                     className="absolute -bottom-2 left-0 w-full h-[3px] bg-gradient-to-r from-rose-500 via-pink-500 to-fuchsia-500 origin-left"
                   />
                 </span>

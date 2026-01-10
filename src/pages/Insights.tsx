@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { insights } from "@/data/insights";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import { RunningText } from "@/components/ui/RunningText";
-import { LiquidBackground } from "@/components/ui/LiquidBackground";
+import { Insights3DBackground } from "@/components/home/Insights3DBackground";
 import { AnimatedCollection } from "@/components/ui/AnimatedCollection";
 import { useRef } from "react";
 
@@ -10,7 +10,7 @@ const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1 }
+    transition: { staggerChildren: 0.02, delayChildren: 0 } // Immediate start
   }
 };
 
@@ -42,17 +42,7 @@ const Insights = () => {
     >
       {/* Hero - Emerald/Teal Theme */}
       <section ref={heroRef} className="section-padding bg-section-primary relative overflow-hidden min-h-[80vh] flex items-center">
-        <LiquidBackground variant="insights" />
-
-        {/* Decorative Elements */}
-        <motion.div
-          style={{ y, opacity }}
-          className="absolute top-[20%] right-[12%] w-36 h-36 rounded-full border border-emerald-500/15 hidden lg:block"
-        />
-        <motion.div
-          style={{ y: useTransform(scrollYProgress, [0, 1], [0, 50]), opacity }}
-          className="absolute bottom-[25%] right-[8%] w-28 h-28 rounded-full bg-gradient-to-br from-emerald-500/15 to-teal-500/10 blur-2xl hidden lg:block"
-        />
+        <Insights3DBackground />
 
         {/* Floating Status Badges */}
         <motion.div
@@ -100,7 +90,7 @@ const Insights = () => {
                   <motion.span
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
-                    transition={{ delay: 0.6, duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
+                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
                     className="absolute -bottom-2 left-0 w-full h-[3px] bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 origin-left"
                   />
                 </span>
@@ -124,7 +114,7 @@ const Insights = () => {
                   key={tag}
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.8 + i * 0.1 }}
+                  transition={{ duration: 0.5 }}
                   whileHover={{ scale: 1.05, backgroundColor: "hsl(var(--foreground) / 0.05)" }}
                   className="px-4 py-2 text-xs font-medium tracking-wider uppercase border border-border/50 rounded-full cursor-default transition-colors"
                 >

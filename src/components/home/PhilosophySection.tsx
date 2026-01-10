@@ -49,7 +49,7 @@ const itemVariants = {
 export function PhilosophySection() {
   return (
     <section className="section-padding bg-section-secondary relative overflow-hidden">
-      <div className="container-editorial">
+      <div className="container-editorial relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 lg:gap-32">
           {/* Header */}
           <motion.div

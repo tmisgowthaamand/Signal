@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import { RunningText } from "@/components/ui/RunningText";
-import { LiquidBackground } from "@/components/ui/LiquidBackground";
+import { Philosophy3DBackground } from "@/components/home/Philosophy3DBackground";
 import { VerticalTabs } from "@/components/ui/VerticalTabs";
 import { useRef } from "react";
 
@@ -37,7 +37,7 @@ const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1 }
+    transition: { staggerChildren: 0.02, delayChildren: 0 }
   }
 };
 
@@ -69,17 +69,10 @@ const Philosophy = () => {
     >
       {/* Hero - Purple/Violet Theme */}
       <section ref={heroRef} className="section-padding bg-section-primary relative overflow-hidden min-h-[80vh] flex items-center">
-        <LiquidBackground variant="philosophy" />
+        <Philosophy3DBackground />
 
-        {/* Decorative Elements */}
-        <motion.div
-          style={{ y, opacity }}
-          className="absolute top-[20%] right-[10%] w-32 h-32 rounded-full border border-purple-500/20 hidden lg:block"
-        />
-        <motion.div
-          style={{ y: useTransform(scrollYProgress, [0, 1], [0, 50]), opacity }}
-          className="absolute bottom-[25%] right-[15%] w-20 h-20 rounded-full bg-gradient-to-br from-violet-500/10 to-purple-500/10 blur-xl hidden lg:block"
-        />
+        {/* Decorative Elements - Removed for cleaner 3D look */}
+
 
         <div className="pointer-events-none absolute inset-x-0 top-24 md:top-28 z-20">
           <RunningText text="HOW WE THINK SHAPES WHAT WE BUILD" className="opacity-50" />
@@ -105,7 +98,7 @@ const Philosophy = () => {
                   <motion.span
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
-                    transition={{ delay: 0.6, duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
+                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
                     className="absolute -bottom-2 left-0 w-full h-[3px] bg-gradient-to-r from-purple-500 via-violet-500 to-fuchsia-500 origin-left"
                   />
                 </span>
@@ -130,7 +123,7 @@ const Philosophy = () => {
                     key={i}
                     initial={{ scale: 0, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.8 + i * 0.1 }}
+                    transition={{ duration: 0.5 }}
                     className="w-10 h-10 rounded-full border-2 border-background bg-gradient-to-br from-purple-500/30 to-violet-500/30 backdrop-blur-sm"
                   />
                 ))}

@@ -7,6 +7,7 @@ import { Layout } from "@/components/layout/Layout";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import React, { Suspense } from "react";
 import { ThemeProvider } from "@/components/theme-provider";
+import { CustomCursor } from "@/components/ui/CustomCursor";
 const Index = React.lazy(() => import("./pages/Index"));
 const Philosophy = React.lazy(() => import("./pages/Philosophy"));
 const Work = React.lazy(() => import("./pages/Work"));
@@ -110,6 +111,7 @@ const App = () => (
                 }
               />
             </Routes>
+            <CustomCursor />
           </Suspense>
         </BrowserRouter>
       </TooltipProvider>

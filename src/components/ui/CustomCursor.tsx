@@ -1,164 +1,148 @@
-import React, { useEffect, useState, useCallback, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
 
-export const CustomCursor = () => {
-    const [isHovering, setIsHovering] = useState(false);
-    const [isInput, setIsInput] = useState(false);
-    const [isVisible, setIsVisible] = useState(false);
-    const [isClicking, setIsClicking] = useState(false);
+import { useEffect, useRef, useState } from 'react';
+import { cn } from '@/lib/utils';
+import { useLocation } from 'react-router-dom';
 
+export function CustomCursor() {
     const cursorRef = useRef<HTMLDivElement>(null);
-    const dotRef = useRef<HTMLDivElement>(null);
-    const ringRef = useRef<HTMLDivElement>(null);
+    const trailerRef = useRef<HTMLDivElement>(null);
+    const [isPointer, setIsPointer] = useState(false);
+    const [isPressed, setIsPressed] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
 
-    const mousePos = useRef({ x: -100, y: -100 });
-    const ringPos = useRef({ x: -100, y: -100 });
-    const rafId = useRef<number | null>(null);
+    // Use refs for position tracking - much faster than DOM dataset
+    const pos = useRef({ x: 0, y: 0 });
+    const trailerPos = useRef({ x: 0, y: 0 });
 
-    const handleMouseMove = useCallback((e: MouseEvent) => {
-        mousePos.current = { x: e.clientX, y: e.clientY };
-        if (!isVisible) setIsVisible(true);
-    }, [isVisible]);
+    const location = useLocation();
 
     useEffect(() => {
-        const updateCursor = () => {
-            // Smoothly interpolate the ring position for a premium feel
-            // but keep it fast enough to not feel laggy
-            const ease = 0.15;
-            ringPos.current.x += (mousePos.current.x - ringPos.current.x) * ease;
-            ringPos.current.y += (mousePos.current.y - ringPos.current.y) * ease;
+        // Only run on devices with fine pointers (mouse) to avoid touch issues
+        const mediaQuery = window.matchMedia("(pointer: fine)");
 
-            if (dotRef.current) {
-                dotRef.current.style.transform = `translate3d(${mousePos.current.x}px, ${mousePos.current.y}px, 0) translate(-50%, -50%)`;
+        const handleVisibility = () => {
+            if (mediaQuery.matches) {
+                setIsVisible(true);
+            } else {
+                setIsVisible(false);
             }
-            if (ringRef.current) {
-                ringRef.current.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0) translate(-50%, -50%)`;
+        };
+
+        // Check initially
+        handleVisibility();
+
+        // Listen for changes
+        mediaQuery.addEventListener('change', handleVisibility);
+
+        if (!mediaQuery.matches) return;
+
+        const onMouseMove = (e: MouseEvent) => {
+            const { clientX, clientY } = e;
+
+            // Update ref for the main dot (instant)
+            pos.current = { x: clientX, y: clientY };
+
+            // Direct transform for main dot (zero lag)
+            if (cursorRef.current) {
+                cursorRef.current.style.transform = `translate3d(${clientX}px, ${clientY}px, 0)`;
+            }
+        };
+
+        const onMouseDown = () => setIsPressed(true);
+        const onMouseUp = () => setIsPressed(false);
+
+        const onMouseEnterLink = () => setIsPointer(true);
+        const onMouseLeaveLink = () => setIsPointer(false);
+
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mousedown', onMouseDown);
+        document.addEventListener('mouseup', onMouseUp);
+
+        // Update interactive elements
+        const updateInteractiveListeners = () => {
+            // Added more selectors to ensure we catch everything clickable
+            const interactiveElements = document.querySelectorAll('a, button, input, select, textarea, [role="button"], .pointer-element, [onclick], label');
+            interactiveElements.forEach(el => {
+                el.removeEventListener('mouseenter', onMouseEnterLink);
+                el.removeEventListener('mouseleave', onMouseLeaveLink);
+                el.addEventListener('mouseenter', onMouseEnterLink);
+                el.addEventListener('mouseleave', onMouseLeaveLink);
+            });
+        };
+
+        updateInteractiveListeners();
+
+        // Mutation observer to handle dynamic content
+        const observer = new MutationObserver(updateInteractiveListeners);
+        observer.observe(document.body, { childList: true, subtree: true });
+
+        // Animation Loop
+        let animationFrameId: number;
+
+        const animateTrailer = () => {
+            // Speed factor: Increased from 0.2 to 0.6 for ultra-snappy response (almost instant)
+            const ease = 0.6;
+
+            // Lerp logic
+            trailerPos.current.x += (pos.current.x - trailerPos.current.x) * ease;
+            trailerPos.current.y += (pos.current.y - trailerPos.current.y) * ease;
+
+            if (trailerRef.current) {
+                const x = trailerPos.current.x;
+                const y = trailerPos.current.y;
+                trailerRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${isPressed ? 0.9 : 1})`;
             }
 
-            rafId.current = requestAnimationFrame(updateCursor);
+            animationFrameId = requestAnimationFrame(animateTrailer);
         };
 
-        rafId.current = requestAnimationFrame(updateCursor);
-        return () => {
-            if (rafId.current) cancelAnimationFrame(rafId.current);
-        };
-    }, []);
-
-    const handleMouseOver = useCallback((e: MouseEvent) => {
-        const target = e.target as HTMLElement;
-        const isClickable =
-            target.tagName.toLowerCase() === 'button' ||
-            target.tagName.toLowerCase() === 'a' ||
-            target.closest('button') ||
-            target.closest('a') ||
-            window.getComputedStyle(target).cursor === 'pointer';
-
-        const isInputField =
-            target.tagName.toLowerCase() === 'input' ||
-            target.tagName.toLowerCase() === 'textarea' ||
-            target.isContentEditable;
-
-        setIsHovering(!!isClickable);
-        setIsInput(!!isInputField);
-    }, []);
-
-    const handleMouseDown = useCallback(() => setIsClicking(true), []);
-    const handleMouseUp = useCallback(() => setIsClicking(false), []);
-
-    useEffect(() => {
-        window.addEventListener("mousemove", handleMouseMove, { passive: true });
-        window.addEventListener("mouseover", handleMouseOver, { passive: true });
-        window.addEventListener("mousedown", handleMouseDown, { passive: true });
-        window.addEventListener("mouseup", handleMouseUp, { passive: true });
-        document.addEventListener("mouseleave", () => setIsVisible(false));
-        document.addEventListener("mouseenter", () => setIsVisible(true));
+        animateTrailer();
 
         return () => {
-            window.removeEventListener("mousemove", handleMouseMove);
-            window.removeEventListener("mouseover", handleMouseOver);
-            window.removeEventListener("mousedown", handleMouseDown);
-            window.removeEventListener("mouseup", handleMouseUp);
+            mediaQuery.removeEventListener('change', handleVisibility);
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mousedown', onMouseDown);
+            document.removeEventListener('mouseup', onMouseUp);
+            observer.disconnect();
+            cancelAnimationFrame(animationFrameId);
+
+            const interactiveElements = document.querySelectorAll('a, button, input, select, textarea, [role="button"], .pointer-element, [onclick], label');
+            interactiveElements.forEach(el => {
+                el.removeEventListener('mouseenter', onMouseEnterLink);
+                el.removeEventListener('mouseleave', onMouseLeaveLink);
+            });
         };
-    }, [handleMouseMove, handleMouseOver, handleMouseDown, handleMouseUp]);
+    }, [location.pathname]); // Re-initialize on route changes for fresh listeners
 
-    // Disable custom cursor on touch devices
-    useEffect(() => {
-        const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-        if (isTouch) setIsVisible(false);
-    }, []);
-
-    if (typeof window !== "undefined" && ('ontouchstart' in window || navigator.maxTouchPoints > 0)) {
-        return null;
-    }
+    if (!isVisible) return null;
 
     return (
-        <>
-            <style>
-                {`
-          @media (min-width: 768px) {
-            * {
-              cursor: none !important;
-            }
-            a, button, [role="button"], input, textarea {
-              cursor: none !important;
-            }
-          }
-        `}
-            </style>
+        <div className="pointer-events-none fixed inset-0 z-[99999] overflow-hidden">
+            {/* Main Dot - The precise cursor */}
+            {/* VITAL: Removed 'transform' from transition-property. It must update instantly. */}
             <div
                 ref={cursorRef}
-                className="fixed inset-0 pointer-events-none z-[999999] overflow-hidden"
-                style={{ opacity: isVisible ? 1 : 0, transition: 'opacity 0.3s ease' }}
-            >
-                {/* Outer ring */}
-                <motion.div
-                    ref={ringRef}
-                    className={cn(
-                        "fixed rounded-full border border-primary/30 flex items-center justify-center transition-colors duration-300 will-change-transform",
-                        isHovering || isClicking ? "bg-primary/5 border-primary/50" : "bg-transparent"
-                    )}
-                    animate={{
-                        width: isClicking ? 40 : isHovering ? 80 : isInput ? 4 : 48,
-                        height: isClicking ? 40 : isHovering ? 80 : isInput ? 32 : 48,
-                        borderRadius: isInput ? "2px" : "100%",
-                    }}
-                    transition={{ duration: 0.25, ease: "easeOut" }}
-                    style={{
-                        top: 0,
-                        left: 0,
-                    }}
-                >
-                    <AnimatePresence>
-                        {isHovering && !isClicking && (
-                            <motion.span
-                                initial={{ opacity: 0, scale: 0.5 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.5 }}
-                                className="body-small text-[10px] tracking-[0.2em] font-bold"
-                            >
-                                VIEW
-                            </motion.span>
-                        )}
-                    </AnimatePresence>
-                </motion.div>
+                className={cn(
+                    "fixed top-0 left-0 w-2 h-2 bg-black dark:bg-white rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none will-change-transform",
+                    "transition-opacity duration-150",
+                    isPointer ? "opacity-0" : "opacity-100"
+                )}
+                style={{ left: 0, top: 0 }}
+            />
 
-                {/* Inner dot */}
-                <div
-                    ref={dotRef}
-                    className={cn(
-                        "fixed w-1.5 h-1.5 bg-primary rounded-full transition-opacity duration-200 will-change-transform",
-                        isInput && "opacity-0"
-                    )}
-                    style={{
-                        top: 0,
-                        left: 0,
-                        opacity: isVisible && !isInput ? 1 : 0,
-                        transform: `scale(${isClicking ? 0.8 : 1})`,
-                    }}
-                />
-            </div>
-        </>
+            {/* Floating Ring - The smooth follower */}
+            {/* Reduced transition duration from 300ms to 100ms for snappy hover feedback */}
+            <div
+                ref={trailerRef}
+                className={cn(
+                    "fixed top-0 left-0 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none will-change-transform",
+                    "border-[1.5px] border-black dark:border-white transition-all duration-100 ease-out",
+                    isPointer
+                        ? "w-14 h-14 bg-black/5 dark:bg-white/10 backdrop-blur-[1px] border-transparent" // Expand on hover
+                        : "w-8 h-8" // Default size
+                )}
+                style={{ left: 0, top: 0 }}
+            />
+        </div>
     );
-};
-
+}

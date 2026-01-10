@@ -1,51 +1,51 @@
 import { Link } from "react-router-dom";
-import { LiquidBackground } from "../ui/LiquidBackground";
+import { Hero3DBackground } from "./Hero3DBackground";
 import { motion } from "framer-motion";
 
 export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center bg-section-primary overflow-hidden">
-      <LiquidBackground variant="home" />
+      <Hero3DBackground />
 
-      <div className="container-editorial relative z-20 pt-20">
-        <div className="max-w-5xl">
+      <div className="container-editorial relative z-50 pt-20 pointer-events-none">
+        <div className="max-w-5xl pointer-events-auto">
           <div className="overflow-hidden mb-6">
             <motion.span
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="caption inline-block"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="caption inline-block text-foreground"
             >
               Signal © 2026 — Strategy & Design
             </motion.span>
           </div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 100 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, ease: [0.23, 1, 0.32, 1] }}
-            className="headline-hero"
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="headline-hero text-foreground"
           >
             Strategy before scale.
           </motion.h1>
 
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.4, ease: [0.23, 1, 0.32, 1] }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
             className="mt-12 md:mt-16 max-w-2xl"
           >
-            <p className="body-large">
+            <p className="body-large text-foreground">
               We partner with considered brands to build clarity, not noise.
               Elevating digital experiences through strategic design and architectural technology.
             </p>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.6, ease: [0.23, 1, 0.32, 1] }}
-            className="mt-16 md:mt-24 flex flex-col sm:flex-row items-start sm:items-center gap-8 md:gap-12"
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="mt-16 md:mt-24 flex flex-col sm:flex-row items-start sm:items-center gap-8 md:gap-12 pointer-events-auto"
           >
             <Link
               to="/proposal"
@@ -79,7 +79,7 @@ export function HeroSection() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1.5 }}
+        transition={{ duration: 0.8 }}
         className="absolute bottom-16 right-16 hidden lg:block z-20"
       >
         <div className="flex flex-col items-end gap-6">

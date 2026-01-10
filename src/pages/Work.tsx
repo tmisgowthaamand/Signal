@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { caseStudies } from "@/data/caseStudies";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import { RunningText } from "@/components/ui/RunningText";
-import { LiquidBackground } from "@/components/ui/LiquidBackground";
+import { Work3DBackground } from "@/components/home/Work3DBackground";
 import { FluidExpandingGrid } from "@/components/ui/FluidExpandingGrid";
 import { useRef } from "react";
 
@@ -10,7 +10,7 @@ const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1 }
+    transition: { staggerChildren: 0.02, delayChildren: 0 }
   }
 };
 
@@ -42,17 +42,7 @@ const Work = () => {
     >
       {/* Hero - Orange/Amber Theme */}
       <section ref={heroRef} className="section-padding bg-section-primary relative overflow-hidden min-h-[80vh] flex items-center">
-        <LiquidBackground variant="work" />
-
-        {/* Decorative Elements */}
-        <motion.div
-          style={{ y, opacity }}
-          className="absolute top-[25%] right-[8%] w-40 h-40 rounded-full border border-orange-500/15 hidden lg:block"
-        />
-        <motion.div
-          style={{ y: useTransform(scrollYProgress, [0, 1], [0, 60]), opacity }}
-          className="absolute bottom-[20%] right-[12%] w-24 h-24 rounded-full bg-gradient-to-br from-amber-500/10 to-orange-500/10 blur-2xl hidden lg:block"
-        />
+        <Work3DBackground />
 
         {/* Floating Badge */}
         <motion.div
@@ -93,7 +83,7 @@ const Work = () => {
                   <motion.span
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
-                    transition={{ delay: 0.6, duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
+                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
                     className="absolute -bottom-2 left-0 w-full h-[3px] bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 origin-left"
                   />
                 </span>
@@ -120,7 +110,7 @@ const Work = () => {
                   key={stat.label}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1 + i * 0.1 }}
+                  transition={{ duration: 0.5 }}
                   className="group"
                 >
                   <motion.span

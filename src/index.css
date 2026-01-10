@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -77,6 +75,35 @@
   body {
     @apply bg-background text-foreground font-sans antialiased min-h-screen relative overflow-x-hidden w-full;
     font-feature-settings: "kern" 1, "liga" 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Custom Cursor Logic */
+  @media (pointer: fine) {
+
+    /* Hide the default cursor */
+    body,
+    a,
+    button,
+    [role="button"],
+    input,
+    select,
+    textarea,
+    .pointer-element,
+    label {
+      cursor: none !important;
+    }
+
+    /* Ensure default cursor reappears if something goes wrong or for resizing */
+    /* We can target specifics if needed, but 'cursor: none' is what the user wants */
+  }
+
+  /* Force all custom elements to be non-blocking */
+  #custom-cursor,
+  #custom-cursor * {
+    pointer-events: none !important;
   }
 
   /* Typography - Grander & Richer */
