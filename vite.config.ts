@@ -30,6 +30,7 @@ export default defineConfig(({ mode }) => {
   const isDev = mode === 'development';
 
   const config = {
+    assetsInclude: ['**/*.hdr'],
     server: {
       host: true,
       port: 8080,
