@@ -85,7 +85,7 @@ function HeroScene() {
     return (
         <>
             <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={45} />
-            <Environment preset="studio" />
+            <Environment files="/assets/studio_small_03_1k.hdr" />
 
             {/* Clean, Bright "Daylight" */}
             <ambientLight intensity={0.4} />

@@ -50,7 +50,7 @@ export default defineConfig(({ mode }) => {
           },
         },
       },
-      chunkSizeWarningLimit: 1000,
+      chunkSizeWarningLimit: 2500,
     },
     plugins: [
       react(),
