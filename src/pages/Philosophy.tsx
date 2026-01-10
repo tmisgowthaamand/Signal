@@ -68,7 +68,7 @@ const Philosophy = () => {
       className="pb-24"
     >
       {/* Hero - Purple/Violet Theme */}
-      <section ref={heroRef} className="section-padding bg-section-primary relative overflow-hidden min-h-[80vh] flex items-center text-neutral-50 dark">
+      <section ref={heroRef} className="section-padding bg-section-primary relative overflow-hidden min-h-[80dvh] flex items-center text-neutral-50 dark">
         <Philosophy3DBackground />
 
         {/* Decorative Elements - Removed for cleaner 3D look */}

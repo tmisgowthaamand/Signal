@@ -1,6 +1,6 @@
 
 import { useRef } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Environment, Float, PerspectiveCamera, ContactShadows, MeshTransmissionMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 import cityHdr from '../../assets/potsdamer_platz_1k.hdr';
@@ -55,6 +55,9 @@ function FluidThought({ position, rotation, color }: any) {
 }
 
 function PhilosophyScene() {
+    const { viewport } = useThree();
+    const isMobile = viewport.width < 10;
+
     return (
         <>
             <PerspectiveCamera makeDefault position={[0, 0, 10]} fov={40} />
@@ -64,7 +67,10 @@ function PhilosophyScene() {
             <spotLight position={[10, 10, 10]} angle={0.5} penumbra={1} intensity={2} color="#ffffff" />
             <pointLight position={[-10, -5, -5]} intensity={1} color="#ffffff" />
 
-            <group position={[4, 0, 0]}>
+            <group
+                position={isMobile ? [0, 0, 0] : [4, 0, 0]}
+                scale={isMobile ? 0.7 : 1}
+            >
                 {/* Central Thought Object */}
                 <FluidThought position={[3, 0, -2]} rotation={[0, 0, 0]} color="#000000" />
 

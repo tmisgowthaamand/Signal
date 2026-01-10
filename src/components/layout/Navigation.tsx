@@ -67,30 +67,35 @@ export function Navigation() {
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 -mr-2 text-foreground hover:opacity-70 transition-all"
-            aria-label={isOpen ? "Close menu" : "Open menu"}
-            aria-expanded={isOpen}
-          >
-            {isOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
+          {/* Mobile Menu Controls - Aligned */}
+          <div className="flex items-center gap-4 md:hidden" style={{ zIndex: 60 }}>
+            <ThemeSwitcher className="bg-transparent border-0 p-0 gap-2" />
+
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="flex items-center justify-center w-10 h-10 text-foreground hover:opacity-70 transition-all focus:outline-none"
+              aria-label={isOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isOpen}
+            >
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
 
-        {/* Mobile Navigation */}
-        <div className={`md:hidden transition-all duration-500 overflow-hidden ${isOpen ? 'max-h-96 border-t border-foreground/10' : 'max-h-0'
+        {/* Mobile Navigation Overlay */}
+        <div className={`fixed inset-0 z-50 bg-background/95 backdrop-blur-3xl transition-all duration-500 ease-[0.22,1,0.36,1] md:hidden flex flex-col justify-center items-center h-[100dvh] ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
           }`}>
-          <div className="py-8 flex flex-col gap-2">
-            {navLinks.map((link) => (
+          <div className="flex flex-col gap-8 items-center text-center p-6 w-full">
+            {navLinks.map((link, i) => (
               <Link
                 key={link.name}
                 to={link.href}
                 onClick={() => setIsOpen(false)}
-                className={`py-4 px-1 text-2xl font-serif italic transition-all ${location.pathname === link.href
-                  ? 'text-foreground translate-x-2'
-                  : 'text-foreground/60 hover:text-foreground hover:translate-x-2'
+                style={{ transitionDelay: `${i * 100}ms` }}
+                className={`text-4xl font-serif font-light tracking-tight transition-all duration-500 transform ${isOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'} ${location.pathname === link.href
+                  ? 'text-foreground italic'
+                  : 'text-foreground/60 hover:text-foreground'
                   }`}
-                aria-current={location.pathname === link.href ? 'page' : undefined}
               >
                 {link.name}
               </Link>
@@ -98,9 +103,9 @@ export function Navigation() {
             <Link
               to="/proposal"
               onClick={() => setIsOpen(false)}
-              className="mt-6 py-5 px-6 bg-foreground text-background text-center font-bold tracking-widest uppercase text-xs"
+              className={`mt-8 luxury-button !w-64 transition-all duration-700 delay-300 transform ${isOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
             >
-              Get Started
+              <span className="text-xs font-bold tracking-[0.2em] uppercase">Get Started</span>
             </Link>
           </div>
         </div>

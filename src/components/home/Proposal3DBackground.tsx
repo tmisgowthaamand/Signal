@@ -1,6 +1,6 @@
 
 import { useRef, useMemo, Suspense } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Environment, Float, PerspectiveCamera, ContactShadows, Stars, Torus, Sphere } from '@react-three/drei';
 import * as THREE from 'three';
 import veniceHdr from '../../assets/venice_sunset_1k.hdr';
@@ -109,6 +109,9 @@ function ParticleStream() {
 }
 
 function ProposalScene() {
+    const { viewport } = useThree();
+    const isMobile = viewport.width < 10;
+
     return (
         <>
             <PerspectiveCamera makeDefault position={[0, 0, 12]} fov={45} />
@@ -122,7 +125,10 @@ function ProposalScene() {
             <pointLight position={[-10, 0, -5]} intensity={0.8} color="#F43F5E" />
             <pointLight position={[0, -10, 5]} intensity={0.5} color="#fff" />
 
-            <group position={[4, 0, 0]}>
+            <group
+                position={isMobile ? [0, 1, 0] : [4, 0, 0]}
+                scale={isMobile ? 0.7 : 1}
+            >
                 {/* Central Metaphor: Rings circling a Core (Partnership) */}
                 <CoreSphere position={[0, 0, 0]} scale={1.5} />
 

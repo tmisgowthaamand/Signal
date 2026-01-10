@@ -1,6 +1,6 @@
 
 import { useRef, Suspense } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Environment, Float, PerspectiveCamera, ContactShadows, Sparkles } from '@react-three/drei';
 import * as THREE from 'three';
 import studioHdr from '../../assets/studio_small_03_1k.hdr';
@@ -83,6 +83,11 @@ function Shards() {
 }
 
 function HeroScene() {
+    const { viewport } = useThree();
+    // Responsive logic: Check if width is constrained (mobile/tablet portrait)
+    // At z=8 roughly, desktop width is ~12-14, mobile is ~3-4.
+    const isMobile = viewport.width < 8;
+
     return (
         <>
             <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={45} />
@@ -93,7 +98,11 @@ function HeroScene() {
             <spotLight position={[10, 10, 10]} angle={0.5} penumbra={1} intensity={1} color="#ffffff" castShadow />
             <pointLight position={[-10, 0, -5]} intensity={0.5} color="blue" />
 
-            <group position={[5, 0, 0]}>
+            {/* Responsive Group Positioning */}
+            <group
+                position={isMobile ? [0, 2, 0] : [5, 0, 0]}
+                scale={isMobile ? 0.6 : 1}
+            >
                 <PrismSignal position={[0, 0, 0]} scale={2.2} />
                 <Shards />
             </group>

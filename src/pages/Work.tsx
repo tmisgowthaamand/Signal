@@ -41,7 +41,7 @@ const Work = () => {
       className="pb-24"
     >
       {/* Hero - Orange/Amber Theme */}
-      <section ref={heroRef} className="section-padding bg-section-primary relative overflow-hidden min-h-[80vh] flex items-center">
+      <section ref={heroRef} className="section-padding bg-section-primary relative overflow-hidden min-h-[80dvh] flex items-center">
         <Work3DBackground />
 
         {/* Floating Badge */}

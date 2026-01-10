@@ -1,6 +1,6 @@
 
 import { useRef, Suspense } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Environment, Float, PerspectiveCamera, ContactShadows, RoundedBox } from '@react-three/drei';
 import * as THREE from 'three';
 import lebomboHdr from '../../assets/lebombo_1k.hdr';
@@ -45,6 +45,9 @@ function StructuralBlock({ position, rotation, scale, type }: any) {
 }
 
 function WorkScene() {
+    const { viewport } = useThree();
+    const isMobile = viewport.width < 10;
+
     return (
         <>
             <PerspectiveCamera makeDefault position={[0, 0, 12]} fov={35} />
@@ -53,7 +56,10 @@ function WorkScene() {
             <ambientLight intensity={0.5} color="#fff7ed" /> {/* Orange/Warm Tint */}
             <spotLight position={[5, 10, 5]} angle={0.4} penumbra={1} intensity={0.8} color="#FFEDD5" castShadow />
 
-            <group position={[4, -1, 0]}>
+            <group
+                position={isMobile ? [0, -2, 0] : [4, -1, 0]}
+                scale={isMobile ? 0.7 : 1}
+            >
                 {/* Main Structure - The "Work" */}
                 <StructuralBlock position={[3, 1, -1]} rotation={[0, 0.4, 0]} scale={[1.5, 4, 1.5]} type="stone" />
 

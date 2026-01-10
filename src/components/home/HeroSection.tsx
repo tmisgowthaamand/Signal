@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center bg-section-primary overflow-hidden">
+    <section className="relative min-h-[100dvh] flex items-center bg-section-primary overflow-hidden">
       <Hero3DBackground />
 
       <div className="container-editorial relative z-50 pt-20 pointer-events-none">
