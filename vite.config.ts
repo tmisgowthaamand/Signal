@@ -16,7 +16,7 @@ const securityHeaders = {
     "default-src 'self'",
     "script-src 'self' 'unsafe-inline' 'unsafe-eval'", // Required for React and Vite dev
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com", // Required for inline styles and Google Fonts
-    "img-src 'self' data: https:",
+    "img-src 'self' data: https: blob:",
     "font-src 'self' data: https://fonts.gstatic.com", // Required for Google Fonts
     "connect-src 'self' https: wss: https://raw.githack.com", // Required for HDR assets
     "frame-ancestors 'none'",
@@ -46,6 +46,7 @@ export default defineConfig(({ mode }) => {
             'router-vendor': ['react-router-dom'],
             'animation-vendor': ['framer-motion'],
             'ui-vendor': ['lucide-react', '@radix-ui/react-slot', 'class-variance-authority', 'tailwind-merge'],
+            'three-vendor': ['three', '@react-three/fiber', '@react-three/drei'],
           },
         },
       },
