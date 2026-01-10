@@ -98,7 +98,7 @@ function UltraScene() {
     return (
         <>
             <PerspectiveCamera makeDefault position={[0, 0, 10]} fov={45} />
-            <Environment preset="warehouse" /> {/* High contrast industrial lighting */}
+            <Environment files="/assets/empty_warehouse_01_1k.hdr" /> {/* High contrast industrial lighting */}
 
             {/* Dramatic Lighting */}
             <ambientLight intensity={0.2} color="#064E3B" /> {/* Deep Emerald Ambient */}

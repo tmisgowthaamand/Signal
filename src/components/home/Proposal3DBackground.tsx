@@ -111,7 +111,7 @@ function ProposalScene() {
     return (
         <>
             <PerspectiveCamera makeDefault position={[0, 0, 12]} fov={45} />
-            <Environment preset="sunset" /> {/* Warm, romantic/proposal lighting */}
+            <Environment files="/assets/venice_sunset_1k.hdr" /> {/* Warm, romantic/proposal lighting */}
 
             {/* Warm Ambient */}
             <ambientLight intensity={0.5} color="#881337" />
