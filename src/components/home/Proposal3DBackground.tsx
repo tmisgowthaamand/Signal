@@ -126,7 +126,7 @@ function ProposalScene() {
             <pointLight position={[0, -10, 5]} intensity={0.5} color="#fff" />
 
             <group
-                position={isMobile ? [0, 1, 0] : [4, 0, 0]}
+                position={isMobile ? [0, 1, 0] : [0, 0, 0]}
                 scale={isMobile ? 0.7 : 1}
             >
                 {/* Central Metaphor: Rings circling a Core (Partnership) */}

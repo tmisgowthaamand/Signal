@@ -98,10 +98,10 @@ function HeroScene() {
             <spotLight position={[10, 10, 10]} angle={0.5} penumbra={1} intensity={1} color="#ffffff" castShadow />
             <pointLight position={[-10, 0, -5]} intensity={0.5} color="blue" />
 
-            {/* Responsive Group Positioning */}
+            {/* Responsive Group Positioning - Centered behind text */}
             <group
-                position={isMobile ? [0, 2, 0] : [5, 0, 0]}
-                scale={isMobile ? 0.6 : 1}
+                position={isMobile ? [0, 2, 0] : [0, 0, 0]}
+                scale={isMobile ? 0.6 : 1.5} // Increased desktop scale slightly for impact behind text
             >
                 <PrismSignal position={[0, 0, 0]} scale={2.2} />
                 <Shards />

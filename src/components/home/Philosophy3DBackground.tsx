@@ -68,7 +68,7 @@ function PhilosophyScene() {
             <pointLight position={[-10, -5, -5]} intensity={1} color="#ffffff" />
 
             <group
-                position={isMobile ? [0, 0, 0] : [4, 0, 0]}
+                position={isMobile ? [0, 0, 0] : [0, 0, 0]}
                 scale={isMobile ? 0.7 : 1}
             >
                 {/* Central Thought Object */}

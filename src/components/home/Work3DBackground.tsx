@@ -57,7 +57,7 @@ function WorkScene() {
             <spotLight position={[5, 10, 5]} angle={0.4} penumbra={1} intensity={0.8} color="#FFEDD5" castShadow />
 
             <group
-                position={isMobile ? [0, -2, 0] : [4, -1, 0]}
+                position={isMobile ? [0, -2, 0] : [0, -1, 0]}
                 scale={isMobile ? 0.7 : 1}
             >
                 {/* Main Structure - The "Work" */}
