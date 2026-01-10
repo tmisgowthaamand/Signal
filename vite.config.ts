@@ -15,10 +15,10 @@ const securityHeaders = {
   'Content-Security-Policy': [
     "default-src 'self'",
     "script-src 'self' 'unsafe-inline' 'unsafe-eval'", // Required for React and Vite dev
-    "style-src 'self' 'unsafe-inline'", // Required for inline styles
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com", // Required for inline styles and Google Fonts
     "img-src 'self' data: https:",
-    "font-src 'self' data:",
-    "connect-src 'self' https: wss:",
+    "font-src 'self' data: https://fonts.gstatic.com", // Required for Google Fonts
+    "connect-src 'self' https: wss: https://raw.githack.com", // Required for HDR assets
     "frame-ancestors 'none'",
     "base-uri 'self'",
     "object-src 'none'"

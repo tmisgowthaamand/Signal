@@ -90,7 +90,7 @@ function HeroScene() {
             {/* Clean, Bright "Daylight" */}
             <ambientLight intensity={0.4} />
             <spotLight position={[10, 10, 10]} angle={0.5} penumbra={1} intensity={1} color="#ffffff" castShadow />
-            <pointLight position={[-10, 0, -5]} intensity={0.5} color="#blue" />
+            <pointLight position={[-10, 0, -5]} intensity={0.5} color="blue" />
 
             <group position={[5, 0, 0]}>
                 <PrismSignal position={[0, 0, 0]} scale={2.2} />
