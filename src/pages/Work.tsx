@@ -196,7 +196,7 @@ const Work = () => {
           >
             <motion.div
               whileHover={{ scale: 1.01 }}
-              className="relative text-center py-24 md:py-32 bg-foreground text-background overflow-hidden rounded-3xl group shadow-2xl"
+              className="relative text-center py-24 md:py-32 bg-foreground text-primary-foreground overflow-hidden rounded-3xl group shadow-2xl"
             >
               {/* Animated Background */}
               <motion.div
@@ -207,12 +207,12 @@ const Work = () => {
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full border border-background/5"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full border border-primary-foreground/5"
               />
               <motion.div
                 animate={{ rotate: -360 }}
                 transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full border border-background/[0.08]"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full border border-primary-foreground/[0.08]"
               />
 
               <div className="relative z-10 px-8">
@@ -220,7 +220,7 @@ const Work = () => {
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  className="caption opacity-60 uppercase tracking-[0.5em] mb-8 block"
+                  className="caption opacity-60 uppercase tracking-[0.5em] mb-8 block text-primary-foreground"
                 >
                   Inquiry
                 </motion.span>
@@ -229,10 +229,10 @@ const Work = () => {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  className="headline-section !text-4xl md:!text-6xl mb-10 leading-tight"
+                  className="headline-section !text-4xl md:!text-6xl mb-10 leading-tight text-primary-foreground"
                 >
                   Ready to find <br />
-                  <span className="italic font-light opacity-80">true clarity?</span>
+                  <span className="italic font-normal opacity-90">true clarity?</span>
                 </motion.h2>
 
                 <motion.p
@@ -240,7 +240,7 @@ const Work = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.1 }}
-                  className="body-large opacity-70 mb-16 max-w-xl mx-auto"
+                  className="body-large text-primary-foreground opacity-90 mb-16 max-w-xl mx-auto"
                 >
                   We take on a limited number of engagements each quarter to ensure every partner gets our full strategic focus.
                 </motion.p>
