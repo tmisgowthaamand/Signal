@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Environment, Float, PerspectiveCamera, ContactShadows, Sparkles } from '@react-three/drei';
 import * as THREE from 'three';
+import studioHdr from '../../assets/studio_small_03_1k.hdr';
 
 // deeply faceted "Diamond/Signal" object
 function PrismSignal({ position, scale }: any) {
@@ -85,7 +86,7 @@ function HeroScene() {
     return (
         <>
             <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={45} />
-            <Environment files="/assets/studio_small_03_1k.hdr" />
+            <Environment files={studioHdr} />
 
             {/* Clean, Bright "Daylight" */}
             <ambientLight intensity={0.4} />

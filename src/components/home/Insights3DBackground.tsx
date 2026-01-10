@@ -3,6 +3,7 @@ import { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Environment, Float, PerspectiveCamera, ContactShadows, Stars, Instance, Instances } from '@react-three/drei';
 import * as THREE from 'three';
+import warehouseHdr from '../../assets/empty_warehouse_01_1k.hdr';
 
 // High-end "Intellect" Crystal
 function UltraCrystal({ position, rotation, scale, color }: any) {
@@ -98,7 +99,7 @@ function UltraScene() {
     return (
         <>
             <PerspectiveCamera makeDefault position={[0, 0, 10]} fov={45} />
-            <Environment files="/assets/empty_warehouse_01_1k.hdr" /> {/* High contrast industrial lighting */}
+            <Environment files={warehouseHdr} /> {/* High contrast industrial lighting */}
 
             {/* Dramatic Lighting */}
             <ambientLight intensity={0.2} color="#064E3B" /> {/* Deep Emerald Ambient */}

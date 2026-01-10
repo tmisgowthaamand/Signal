@@ -3,6 +3,7 @@ import { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Environment, Float, PerspectiveCamera, ContactShadows, Stars, Torus, Sphere } from '@react-three/drei';
 import * as THREE from 'three';
+import veniceHdr from '../../assets/venice_sunset_1k.hdr';
 
 // High-end Rose Gold Metal Ring
 function RoseRing({ position, rotation, scale, delay }: any) {
@@ -111,7 +112,7 @@ function ProposalScene() {
     return (
         <>
             <PerspectiveCamera makeDefault position={[0, 0, 12]} fov={45} />
-            <Environment files="/assets/venice_sunset_1k.hdr" /> {/* Warm, romantic/proposal lighting */}
+            <Environment files={veniceHdr} /> {/* Warm, romantic/proposal lighting */}
 
             {/* Warm Ambient */}
             <ambientLight intensity={0.5} color="#881337" />

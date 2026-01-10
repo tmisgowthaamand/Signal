@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Environment, Float, PerspectiveCamera, ContactShadows, MeshTransmissionMaterial } from '@react-three/drei';
 import * as THREE from 'three';
+import cityHdr from '../../assets/potsdamer_platz_1k.hdr';
 
 // "Fluid Thought" - A distorted organic shape
 function FluidThought({ position, rotation, color }: any) {
@@ -57,7 +58,7 @@ function PhilosophyScene() {
     return (
         <>
             <PerspectiveCamera makeDefault position={[0, 0, 10]} fov={40} />
-            <Environment files="/assets/potsdamer_platz_1k.hdr" />
+            <Environment files={cityHdr} />
 
             <ambientLight intensity={0.6} color="#fafafa" />
             <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={1} color="#E8D5C4" /> {/* Warm/Paper tone */}

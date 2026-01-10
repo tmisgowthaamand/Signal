@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Environment, Float, PerspectiveCamera, ContactShadows, RoundedBox } from '@react-three/drei';
 import * as THREE from 'three';
+import lebomboHdr from '../../assets/lebombo_1k.hdr';
 
 // "The Monoliths" - Solid, grounded, structured
 function StructuralBlock({ position, rotation, scale, type }: any) {
@@ -47,7 +48,7 @@ function WorkScene() {
     return (
         <>
             <PerspectiveCamera makeDefault position={[0, 0, 12]} fov={35} />
-            <Environment files="/assets/lebombo_1k.hdr" /> {/* Warm interior light */}
+            <Environment files={lebomboHdr} /> {/* Warm interior light */}
 
             <ambientLight intensity={0.5} color="#fff7ed" /> {/* Orange/Warm Tint */}
             <spotLight position={[5, 10, 5]} angle={0.4} penumbra={1} intensity={0.8} color="#FFEDD5" castShadow />
