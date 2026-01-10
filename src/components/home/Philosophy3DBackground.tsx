@@ -60,15 +60,16 @@ function PhilosophyScene() {
             <PerspectiveCamera makeDefault position={[0, 0, 10]} fov={40} />
             <Environment files={cityHdr} />
 
-            <ambientLight intensity={0.6} color="#fafafa" />
-            <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={1} color="#E8D5C4" /> {/* Warm/Paper tone */}
+            <ambientLight intensity={1.5} color="#ffffff" />
+            <spotLight position={[10, 10, 10]} angle={0.5} penumbra={1} intensity={2} color="#ffffff" />
+            <pointLight position={[-10, -5, -5]} intensity={1} color="#ffffff" />
 
             <group position={[4, 0, 0]}>
                 {/* Central Thought Object */}
-                <FluidThought position={[3, 0, -2]} rotation={[0, 0, 0]} color="#e0f2fe" /> {/* Soft Sky Blue tint */}
+                <FluidThought position={[3, 0, -2]} rotation={[0, 0, 0]} color="#000000" />
 
                 {/* Secondary Object - different angle */}
-                <FluidThought position={[0, 2, -5]} rotation={[1, 1, 0]} color="#f3e8ff" /> {/* Soft Purple tint */}
+                <FluidThought position={[0, 2, -5]} rotation={[1, 1, 0]} color="#000000" />
             </group>
 
             <ContactShadows position={[0, -5, 0]} opacity={0.3} scale={30} blur={4} far={6} color="#525252" />
@@ -78,7 +79,7 @@ function PhilosophyScene() {
 
 export function Philosophy3DBackground() {
     return (
-        <div className="absolute inset-0 z-[-1] select-none overflow-hidden bg-gradient-to-b from-[#F9F9F9] to-[#F1F1F1] dark:from-[#0a0a0a] dark:to-[#1a1a1a]">
+        <div className="absolute inset-0 z-[-1] select-none overflow-hidden bg-gradient-to-b from-[#1E1E1E] to-[#121212] dark:from-[#050505] dark:to-[#0a0a0a]">
             <Canvas dpr={[1, 1.5]} gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}>
                 <PhilosophyScene />
             </Canvas>

@@ -1,5 +1,5 @@
 
-import { useRef } from 'react';
+import { useRef, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Environment, Float, PerspectiveCamera, ContactShadows, Sparkles } from '@react-three/drei';
 import * as THREE from 'three';
@@ -108,11 +108,23 @@ function HeroScene() {
 
 export function Hero3DBackground() {
     return (
-        <div className="absolute inset-0 z-[-1] select-none overflow-hidden bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-black">
-            <Canvas dpr={[1, 1.5]} gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}>
-                <HeroScene />
+        <div className="absolute inset-0 z-[-1] select-none overflow-hidden bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-black will-change-transform">
+            <Canvas
+                dpr={[1, 1.5]}
+                gl={{
+                    antialias: true, // Keep AA for sharp edges, relying on dpr cap 
+                    alpha: true,
+                    powerPreference: "high-performance",
+                    stencil: false, // Disable stencil if not needed
+                    depth: true
+                }}
+                frameloop="always" // Keep always for smoothness, but could use 'demand' if interaction based
+            >
+                <Suspense fallback={null}>
+                    <HeroScene />
+                </Suspense>
             </Canvas>
             <div className="absolute inset-0 bg-white/30 dark:bg-black/30 pointer-events-none" />
-        </div>
+        </div >
     );
 }

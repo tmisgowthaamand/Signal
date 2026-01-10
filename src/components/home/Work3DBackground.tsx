@@ -1,5 +1,5 @@
 
-import { useRef } from 'react';
+import { useRef, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Environment, Float, PerspectiveCamera, ContactShadows, RoundedBox } from '@react-three/drei';
 import * as THREE from 'three';
@@ -72,9 +72,21 @@ function WorkScene() {
 
 export function Work3DBackground() {
     return (
-        <div className="absolute inset-0 z-[-1] select-none overflow-hidden bg-[#FBF9F6] dark:bg-[#0c0a09]">
-            <Canvas dpr={[1, 1.5]} gl={{ antialias: true, alpha: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.1, powerPreference: "high-performance" }}>
-                <WorkScene />
+        <div className="absolute inset-0 z-[-1] select-none overflow-hidden bg-[#FBF9F6] dark:bg-[#0c0a09] will-change-transform">
+            <Canvas
+                dpr={[1, 1.5]}
+                gl={{
+                    antialias: false, // Disable AA for better perf on this texture-heavy scene
+                    alpha: true,
+                    toneMapping: THREE.ACESFilmicToneMapping,
+                    toneMappingExposure: 1.1,
+                    powerPreference: "high-performance",
+                    stencil: false
+                }}
+            >
+                <Suspense fallback={null}>
+                    <WorkScene />
+                </Suspense>
             </Canvas>
             {/* Warm grain overlay */}
             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIi8+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiNjY2MiLz4KPC9zdmc+')] opacity-5 mix-blend-multiply dark:mix-blend-overlay pointer-events-none" />

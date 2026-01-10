@@ -1,5 +1,5 @@
 
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Environment, Float, PerspectiveCamera, ContactShadows, Stars, Instance, Instances } from '@react-three/drei';
 import * as THREE from 'three';
@@ -118,7 +118,7 @@ function UltraScene() {
             </group>
 
             {/* Background Starfield for "Depth" */}
-            <Stars radius={20} depth={50} count={500} factor={4} saturation={0} fade speed={1} />
+            <Stars radius={20} depth={50} count={250} factor={4} saturation={0} fade speed={1} />
 
             {/* High Quality Shadow Floor - Optimized */}
             <ContactShadows position={[0, -4, 0]} opacity={0.4} scale={30} blur={2.5} far={5} color="#065F46" resolution={128} frames={1} />
@@ -128,10 +128,22 @@ function UltraScene() {
 
 export function Insights3DBackground() {
     return (
-        <div className="absolute inset-0 z-[-1] select-none overflow-hidden bg-gradient-to-b from-slate-50 to-emerald-50/30 dark:from-slate-950 dark:to-emerald-950/30">
+        <div className="absolute inset-0 z-[-1] select-none overflow-hidden bg-gradient-to-b from-slate-50 to-emerald-50/30 dark:from-slate-950 dark:to-emerald-950/30 will-change-transform">
             {/* We use a specific background color to blend with the glass */}
-            <Canvas dpr={[1, 1.5]} gl={{ antialias: true, alpha: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.2, powerPreference: "high-performance" }}>
-                <UltraScene />
+            <Canvas
+                dpr={[1, 1.5]}
+                gl={{
+                    antialias: true,
+                    alpha: true,
+                    toneMapping: THREE.ACESFilmicToneMapping,
+                    toneMappingExposure: 1.2,
+                    powerPreference: "high-performance",
+                    stencil: false
+                }}
+            >
+                <Suspense fallback={null}>
+                    <UltraScene />
+                </Suspense>
                 {/* Post-processing Bloom could be creating "Ultra" feel, but standard three materials with high emissive values work well too */}
             </Canvas>
 

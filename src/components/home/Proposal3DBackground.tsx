@@ -1,5 +1,5 @@
 
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Environment, Float, PerspectiveCamera, ContactShadows, Stars, Torus, Sphere } from '@react-three/drei';
 import * as THREE from 'three';
@@ -134,7 +134,7 @@ function ProposalScene() {
             </group>
 
             {/* Stars for that "Universe" feeling */}
-            <Stars radius={30} depth={50} count={400} factor={3} saturation={0} fade speed={0.5} />
+            <Stars radius={30} depth={50} count={200} factor={3} saturation={0} fade speed={0.5} />
 
             <ContactShadows position={[0, -5, 0]} opacity={0.4} scale={30} blur={3} far={6} color="#4C0519" resolution={256} frames={1} />
         </>
@@ -143,9 +143,21 @@ function ProposalScene() {
 
 export function Proposal3DBackground() {
     return (
-        <div className="absolute inset-0 z-[-1] select-none overflow-hidden bg-gradient-to-b from-rose-50/50 to-white dark:from-rose-950/30 dark:to-black">
-            <Canvas dpr={[1, 1.5]} gl={{ antialias: true, alpha: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.1, powerPreference: "high-performance" }}>
-                <ProposalScene />
+        <div className="absolute inset-0 z-[-1] select-none overflow-hidden bg-gradient-to-b from-rose-50/50 to-white dark:from-rose-950/30 dark:to-black will-change-transform">
+            <Canvas
+                dpr={[1, 1.5]}
+                gl={{
+                    antialias: true,
+                    alpha: true,
+                    toneMapping: THREE.ACESFilmicToneMapping,
+                    toneMappingExposure: 1.1,
+                    powerPreference: "high-performance",
+                    stencil: false
+                }}
+            >
+                <Suspense fallback={null}>
+                    <ProposalScene />
+                </Suspense>
             </Canvas>
 
             {/* Soft overlay to blend */}
